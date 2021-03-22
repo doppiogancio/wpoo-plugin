@@ -1,0 +1,15 @@
+<div class="wrap">
+    <h1>{{ title }}</h1>
+
+    <h2>Script</h2>
+    <p>To start the XML Transform script, just click on the following button <a id="start-xml-transform-script" class="page-title-action" href="#">START</a> </p>
+    <pre id="xml-transform-script-output"></pre>
+
+    <form method="post" action="options.php">
+        {{ settings_fields(optionGroup) | raw }}
+        {{ do_settings_sections(page) | raw }}
+        {{ submit_button() }}
+    </form>
+
+
+</div>
