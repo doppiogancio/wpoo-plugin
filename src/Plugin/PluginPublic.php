@@ -28,10 +28,12 @@ class PluginPublic
         $this->plugin = $plugin;
 
         $loader = new FilesystemLoader($this->getAbsolutePath('partials'));
-        $this->twig = new Environment($loader, [
+        $this->twig = new Environment(
+            $loader, [
             'debug' => true,
             'cache' => $this->getAbsolutePath('cache'),
-        ]);
+            ]
+        );
 
         $this->twig->addExtension(new DebugExtension());
     }
@@ -43,7 +45,7 @@ class PluginPublic
 
     public function enqueueScripts()
     {
-        wp_enqueue_script($this->getName(), $this->getAbsoluteUrl('js/plugin-public.js'), array( 'jquery' ), $this->plugin->getVersion(), false );
+        wp_enqueue_script($this->getName(), $this->getAbsoluteUrl('js/plugin-public.js'), array( 'jquery' ), $this->plugin->getVersion(), false);
     }
 
     public function decorateTitles($title, $id = null): string
@@ -73,9 +75,11 @@ class PluginPublic
     {
         return [
             new DemoTemplate($this->twig),
-            new ShortcodeWithCallback('test', static function (): string {
-                return 'Just a test';
-            }),
+            new ShortcodeWithCallback(
+                'test', static function (): string {
+                    return 'Just a test';
+                }
+            ),
         ];
     }
 

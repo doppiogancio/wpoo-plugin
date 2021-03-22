@@ -13,11 +13,12 @@ class Hook
 
     /**
      * Hook constructor.
+     *
      * @param string $hook
      * @param $component
      * @param string $callback
-     * @param int $priority
-     * @param int $acceptedArgs
+     * @param int    $priority
+     * @param int    $acceptedArgs
      */
     public function __construct(string $hook, $component, string $callback, int $priority = 10, int $acceptedArgs = 1)
     {

@@ -24,11 +24,13 @@ class DemoTemplate implements Shortcode
     public function render(): string
     {
         global $post;
-        return $this->twig->render('demo_template.html.twig', [
+        return $this->twig->render(
+            'demo_template.html.twig', [
             'post' => $post,
             'words' => [
                 'lorem', 'ipsum', 'sit', 'amet'
             ]
-        ]);
+            ]
+        );
     }
 }

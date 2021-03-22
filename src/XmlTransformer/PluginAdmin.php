@@ -27,11 +27,13 @@ class PluginAdmin extends BasePluginAdmin
 
     public function renderAdminMenuPage(): void
     {
-        $html = $this->twig->render('plugin-admin-menu-page.html.twig', [
+        $html = $this->twig->render(
+            'plugin-admin-menu-page.html.twig', [
             'title' => 'XML Transformer',
             'optionGroup' => self::OPTION_GROUP,
             'page' => self::PAGE,
-        ]);
+            ]
+        );
 
         print html_entity_decode($html);
     }
@@ -94,12 +96,14 @@ class PluginAdmin extends BasePluginAdmin
             $fieldName,
             function () use ($fieldId) {
                 $options = get_option(self::OPTION_NAME);
-                print $this->twig->render('text-field.html.twig', [
+                print $this->twig->render(
+                    'text-field.html.twig', [
                     'title' => $fieldId,
                     'optionName' => self::OPTION_NAME,
                     'fieldName' => $fieldId,
                     'value' => isset($options[$fieldId]) ? esc_attr($options[$fieldId]) : '',
-                ]);
+                    ]
+                );
             },
             $page,
             $section

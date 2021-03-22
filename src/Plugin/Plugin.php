@@ -14,18 +14,18 @@ class Plugin
     /**
      * The unique identifier of this plugin.
      *
-     * @since    1.0.0
-     * @access   protected
-     * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+     * @since  1.0.0
+     * @access protected
+     * @var    string    $plugin_name    The string used to uniquely identify this plugin.
      */
     protected $name;
 
     /**
      * The current version of the plugin.
      *
-     * @since    1.0.0
-     * @access   protected
-     * @var      string    $version    The current version of the plugin.
+     * @since  1.0.0
+     * @access protected
+     * @var    string    $version    The current version of the plugin.
      */
     protected $version;
 
@@ -95,15 +95,15 @@ class Plugin
     protected function defineAdminHooks()
     {
         $pluginAdmin = $this->getPluginAdmin();
-        $this->loader->addAction( 'admin_enqueue_scripts', [$pluginAdmin, 'enqueueStyles']);
-        $this->loader->addAction( 'admin_enqueue_scripts', [$pluginAdmin, 'enqueueScripts']);
+        $this->loader->addAction('admin_enqueue_scripts', [$pluginAdmin, 'enqueueStyles']);
+        $this->loader->addAction('admin_enqueue_scripts', [$pluginAdmin, 'enqueueScripts']);
     }
 
     protected function definePublicHooks()
     {
         $pluginPublic = new PluginPublic($this);
-        $this->loader->addAction( 'wp_enqueue_scripts', [$pluginPublic, 'enqueueStyles']);
-        $this->loader->addAction( 'wp_enqueue_scripts', [$pluginPublic, 'enqueueScripts']);
+        $this->loader->addAction('wp_enqueue_scripts', [$pluginPublic, 'enqueueStyles']);
+        $this->loader->addAction('wp_enqueue_scripts', [$pluginPublic, 'enqueueScripts']);
 
         // Here we add filters and actions
         $this->loader->addFilter('the_title', [$pluginPublic, 'decorateTitles'], 10, 2);
@@ -113,20 +113,22 @@ class Plugin
             add_shortcode($shortcode->getName(), [$shortcode, 'render']);
         }
 
-        add_action('rest_api_init', static function () use ($pluginPublic) {
-            $engine = new Engine('wpoo');
+        add_action(
+            'rest_api_init', static function () use ($pluginPublic) {
+                $engine = new Engine('wpoo');
 
-            $v1 = $engine->group('/v1');
-            $v2 = $engine->group('/v2');
+                $v1 = $engine->group('/v1');
+                $v2 = $engine->group('/v2');
 
-            foreach ($pluginPublic->getV1Controllers($v1) as $controller) {
-                $controller->registerRoutes();
+                foreach ($pluginPublic->getV1Controllers($v1) as $controller) {
+                    $controller->registerRoutes();
+                }
+
+                foreach ($pluginPublic->getV2Controllers($v2) as $controller) {
+                    $controller->registerRoutes();
+                }
             }
-
-            foreach ($pluginPublic->getV2Controllers($v2) as $controller) {
-                $controller->registerRoutes();
-            }
-        });
+        );
     }
 
     protected function getPluginAdmin(): PluginAdmin

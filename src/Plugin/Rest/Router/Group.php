@@ -22,46 +22,54 @@ class Group implements EngineInterface
 
     public function GET(string $route, callable $callback)
     {
-        register_rest_route($this->getRelativePath(), $route, [
+        register_rest_route(
+            $this->getRelativePath(), $route, [
             [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => $callback,
                 'permission_callback' => '__return_true',
             ],
-        ]);
+            ]
+        );
     }
 
     public function POST(string $route, callable $callback)
     {
-        register_rest_route($this->getRelativePath(), $route, [
+        register_rest_route(
+            $this->getRelativePath(), $route, [
             [
                 'methods' => WP_REST_Server::CREATABLE,
                 'callback' => $callback,
                 'permission_callback' => '__return_true',
             ],
-        ]);
+            ]
+        );
     }
 
     public function PUT(string $route, callable $callback)
     {
-        register_rest_route($this->getRelativePath(), $route, [
+        register_rest_route(
+            $this->getRelativePath(), $route, [
             [
                 'methods' => 'PUT',
                 'callback' => $callback,
                 'permission_callback' => '__return_true',
             ],
-        ]);
+            ]
+        );
     }
 
     public function DELETE(string $route, callable $callback)
     {
-        register_rest_route($this->getRelativePath(), $route, [
+        register_rest_route(
+            $this->getRelativePath(), $route, [
             [
                 'methods' => WP_REST_Server::DELETABLE,
                 'callback' => $callback,
                 'permission_callback' => '__return_true',
             ],
-        ]);
+            ]
+        );
     }
 
     public function getRelativePath(string $relativePath = ''): string

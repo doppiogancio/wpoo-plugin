@@ -24,10 +24,12 @@ class PluginAdmin
         $this->plugin = $plugin;
 
         $loader = new FilesystemLoader($this->getAbsolutePath('partials'));
-        $this->twig = new Environment($loader, [
+        $this->twig = new Environment(
+            $loader, [
             'debug' => true,
             'cache' => $this->getAbsolutePath('cache'),
-        ]);
+            ]
+        );
 
         WordpressFunctions::handleWordpressFunctions($this->twig);
         $this->twig->addExtension(new DebugExtension());
@@ -40,7 +42,7 @@ class PluginAdmin
 
     public function enqueueScripts()
     {
-        wp_enqueue_script($this->getName(), $this->getAbsoluteUrl('js/plugin-admin.js'), array( 'jquery' ), $this->plugin->getVersion(), false );
+        wp_enqueue_script($this->getName(), $this->getAbsoluteUrl('js/plugin-admin.js'), array( 'jquery' ), $this->plugin->getVersion(), false);
     }
 
     private function getAbsolutePath(string $path): string
